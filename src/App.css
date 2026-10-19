@@ -1,0 +1,173 @@
+body {
+  font-family: sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.blocklist {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  background-color: white;
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+
+.blocklist-placeholder {
+  text-align: center;
+  height: 51px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.blocklist-placeholder span {
+  color: white;
+  opacity: 0.75;
+}
+
+.blocklist .prepend-block-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translate(50%, -50%);
+  z-index: 1;
+}
+
+.block {
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.blocklist-0 > .block {
+  background-color: #439a86;
+}
+
+.blocklist-1 > .block {
+  background-color: #228a8c;
+}
+
+.blocklist-2 > .block {
+  background-color: #007991;
+}
+
+.block + .block {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.block:last-child {
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+
+.new-block {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  gap: 0.5rem;
+  position: relative;
+  height: 51px;
+}
+
+.new-block button:not(.append-block-button) {
+  width: 100%;
+}
+
+.statement {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.loop {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0 1.5rem 0.5rem;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.loop > .blocklist {
+  margin-left: 2rem;
+  padding: 0.25rem;
+  padding-right: 0;
+}
+
+.condition {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0 1.5rem 0.5rem;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.condition-body {
+  display: flex;
+  margin-left: 2rem;
+}
+
+.condition-body > .blocklist {
+  width: 100%;
+  padding: 0.25rem;
+  padding-right: 0;
+}
+
+.condition-body > .blocklist + .blocklist {
+  padding-left: 0.75rem;
+  border-radius: 0;
+}
+
+.statement input, .loop input, .condition input {
+  background-color: transparent;
+  color: white;
+  appearance: none;
+  font-size: 1rem;
+  border: none;
+  flex-grow: 1;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.statement input:focus-visible, .loop input:focus-visible, .condition input:focus-visible {
+  outline: 1px solid #222e50;
+  border-radius: 0.5rem;
+}
+
+.statement input::placeholder, .loop input::placeholder, .condition input::placeholder {
+  color: white;
+  opacity: 0.75;
+}
+
+.append-block-button {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  transform: translate(50%, 50%);
+  z-index: 1;
+}
+
+.button {
+  background: #222e50;
+  color: white;
+  border: none;
+  border-radius: 1rem;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #394568;
+}
+
+.prepend-block-button, .append-block-button {
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+}
