@@ -18,7 +18,8 @@ body {
 
 .blocklist-placeholder {
   text-align: center;
-  height: 51px;
+  min-height: 51px;
+  padding: 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -114,7 +115,7 @@ body {
 }
 
 .condition-body > .blocklist {
-  width: 100%;
+  width: 50%;
   padding: 0.25rem;
   padding-right: 0;
 }
@@ -133,6 +134,11 @@ body {
   flex-grow: 1;
   text-align: center;
   padding: 0.5rem;
+  max-width: 100%;
+}
+
+.loop > input, .condition > input {
+  max-width: calc(100% - 0.5rem);
 }
 
 .statement input:focus-visible, .loop input:focus-visible, .condition input:focus-visible {
