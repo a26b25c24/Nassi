@@ -13,12 +13,10 @@ function App() {
       .toSvg(node)
       .then((dataUrl) => {
         node.style.display = "none"
-        const img = new Image();
-        img.src = dataUrl;
-        document.querySelectorAll("body > img").forEach((img) => {
-          img.remove();
-        });
-        document.body.appendChild(img);
+        const link = document.createElement("a")
+        link.download = "Struktogramm.svg"
+        link.href = dataUrl
+        link.click()
       })
       .catch((err) => {
         console.error("Error while downloading image", err);

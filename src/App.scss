@@ -26,7 +26,6 @@ body {
         font-size: 1rem;
         border: none;
         flex-grow: 1;
-        text-align: center;
         padding: 0.5rem;
         max-width: 100%;
     }
@@ -151,6 +150,10 @@ body {
             content: "falsch";
             right: 0.5rem;
         }
+
+        > svg {
+            display: none;
+        }
     }
     
     .condition-body {
@@ -179,15 +182,8 @@ body {
     
     .statement, .loop, .condition {
         input {
-            background-color: transparent;
             color: white;
-            appearance: none;
-            font-size: 1rem;
-            border: none;
-            flex-grow: 1;
             text-align: center;
-            padding: 0.5rem;
-            max-width: 100%;
             
             &:focus-visible {
                 outline: 1px solid #222e50;
@@ -240,6 +236,11 @@ body {
         flex-direction: column;
     }
     
+    .statement, .loop, .condition {
+        display: flex;
+        flex-direction: column;
+    }
+    
     .statement:not(:last-child), .loop:not(:last-child) {
         border-bottom-width: 1px;
     }
@@ -248,13 +249,46 @@ body {
         margin-left: 3rem;
         border-width: 1px 0 0 1px;
     }
+
+    .condition {
+        margin-bottom: -1px;
+
+        > input {
+            text-align: center;
+        }
+
+        &::before, &::after {
+            position: absolute;
+            top: 1rem;
+            color: black;
+            z-index: 1;
+        }
+
+        &::before {
+            content: "wahr";
+            left: 0.5rem;
+        }
+
+        &::after {
+            content: "falsch";
+            right: 0.5rem;
+        }
+
+        > svg {
+            position: absolute;
+            height: 35px;
+            width: 100%;
+            pointer-events: none;
+        }
+    }
     
     .condition-body {
         display: flex;
 
         > .blocklist {
             width: 50%;
-            border-width: 1px 0 0 0;
+            border-width: 1px 0 1px 0;
+            height: fit-content;
 
             &:first-child {
                 border-right-width: 1px;
