@@ -1,5 +1,15 @@
-body {
-    font-family: sans-serif;
+@font-face {
+    font-family: "Fredoka";
+    src: url("./assets/fonts/Fredoka/Fredoka-VariableFont_wdth,wght.ttf") format("truetype");
+}
+
+:root {
+    font-size: 16px;
+}
+
+body, button, input {
+    font-family: "Fredoka", sans-serif;
+    font-size: 1rem;
 }
 
 * {
@@ -23,15 +33,22 @@ body {
     input {
         background-color: transparent;
         appearance: none;
-        font-size: 1rem;
         border: none;
-        flex-grow: 1;
         padding: 0.5rem;
-        max-width: 100%;
+        min-width: 100%;
     }
 }
 
-.blocklist-root-edit, .blocklist-root-download-pretty {
+.blocklist-root {
+    padding: 2rem;
+    width: fit-content;
+}
+
+.blocklist-root--styled {
+    &:not(.blocklist-root--download) {
+        min-width: 100%;
+    }
+
     .blocklist {
         position: relative;
         display: flex;
@@ -40,19 +57,11 @@ body {
         background-color: white;
         border-top-left-radius: 1rem;
         border-bottom-left-radius: 1rem;
-    
-        .prepend-block-button {
-            position: absolute;
-            right: 0;
-            top: 0;
-            transform: translate(50%, -50%);
-            z-index: 1;
-        }
     }
     
     .blocklist-placeholder {
         text-align: center;
-        min-height: 51px;
+        min-height: 53px;
         padding: 0.5rem;
         display: flex;
         justify-content: center;
@@ -60,7 +69,7 @@ body {
         gap: 0.5rem;
     
         span {
-            color: white;
+            color: #222e50;
             opacity: 0.75;
         }
     }
@@ -81,15 +90,15 @@ body {
     }
     
     .blocklist-0 > .block {
-        background-color: #439a86;
+        background-color: #72c06a;
     }
     
     .blocklist-1 > .block {
-        background-color: #228a8c;
+        background-color: #4aad9f;
     }
     
     .blocklist-2 > .block {
-        background-color: #007991;
+        background-color: #4a96b3;
     }
     
     .new-block {
@@ -98,9 +107,9 @@ body {
         padding: 0.5rem;
         gap: 0.5rem;
         position: relative;
-        height: 51px;
+        height: 53px;
     
-        button:not(.append-block-button) {
+        button:not(.append-block-button, .delete-block-button) {
             width: 100%;
         }
     }
@@ -111,6 +120,8 @@ body {
         padding: 0.5rem;
         gap: 0.5rem;
         position: relative;
+        width: fit-content;
+        min-width: 100%;
     }
     
     .loop {
@@ -133,12 +144,14 @@ body {
         padding: 0.5rem 0 1.5rem 0;
         gap: 0.5rem;
         position: relative;
+        min-width: 100%;
+        width: max-content;
 
         &::before, &::after {
             position: absolute;
             top: 1.75rem;
-            color: white;
-            font-weight: bold;
+            color: #222e50;
+            font-weight: 500;
         }
 
         &::before {
@@ -154,14 +167,20 @@ body {
         > svg {
             display: none;
         }
+
+        > input {
+            margin: auto;
+        }
     }
     
     .condition-body {
-        display: flex;
+        display: inline-grid;
         gap: 2rem;
+        grid-template-columns: repeat(2, 1fr);
+        width: 100%;
     
         > .blocklist {
-            width: 50%;
+            flex-grow: 1;
             padding: 0.25rem;
 
             &:nth-child(1) {
@@ -182,7 +201,7 @@ body {
     
     .statement, .loop, .condition {
         input {
-            color: white;
+            color: #222e50;
             text-align: center;
             
             &:focus-visible {
@@ -191,7 +210,7 @@ body {
             }
     
             &::placeholder {
-                color: white;
+                color: #222e50;
                 opacity: 0.75;
             }
         }
@@ -200,33 +219,110 @@ body {
     .loop, .condition {
         > input {
             margin: 0 0.5rem;
+            min-width: calc(100% - 1rem);
         }
+    }
+
+    .prepend-block-button {
+        right: 0;
+        top: 0;
+        transform: translate(50%, -50%);
     }
     
     .append-block-button {
-        position: absolute;
         right: 0;
         bottom: 0;
         transform: translate(50%, 50%);
-        z-index: 1;
     }
     
-    .prepend-block-button, .append-block-button {
+    .delete-block-button {
+        right: 0.5rem;
+        top: 14px;
+        background-color: #a92147;
+    }
+    
+    .prepend-block-button, .append-block-button, .delete-block-button {
+        position: absolute;
+        z-index: 1;
         width: 1.5rem;
         height: 1.5rem;
-        padding: 0;
+        padding: 0.3rem;
+
+        > svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+    }
+
+    &:not(.blocklist-root--deleting) {
+        .delete-block-button {
+            display: none;
+        }
+    }
+
+    &.blocklist-root--deleting {
+        .new-block {
+            padding-right: 2.5rem;
+        }
+
+        .statement > input {
+            min-width: calc(100% - 2rem);
+            margin-right: 2rem;
+        }
+        
+        .loop > input {
+            min-width: calc(100% - 3rem);
+            margin-right: 2.5rem;
+        }
+        
+        .condition {
+            > input {
+                min-width: calc(100% - 3rem);
+                margin-right: 2.5rem;
+            }
+
+            &::after {
+                right: 2.5rem;
+            }
+        }
     }
 }
 
-.blocklist-root-download-pretty, .blocklist-root-download-official {
-    .prepend-block-button, .append-block-button, .new-block, .blocklist-placeholder {
+.blocklist-root--download, .blocklist-root--standard {
+    caret-color: transparent;
+
+    .prepend-block-button, .append-block-button, .delete-block-button {
         display: none;
     }
 }
 
-.blocklist-root-download-official {
+.blocklist-root--standard {
+    &:not(.blocklist-root--download) {
+        pointer-events: none;
+    }
+
     * {
         border: 0 solid black;
+    }
+
+    .new-block, .blocklist-placeholder {
+        position: relative;
+        width: 3rem;
+        overflow: hidden;
+        text-wrap: nowrap;
+
+        &::before {
+            content: "leer";
+            font-style: italic;
+            position: absolute;
+            inset: 0;
+            background: white;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     }
 
     .blocklist {
@@ -235,26 +331,41 @@ body {
         display: flex;
         flex-direction: column;
     }
-    
+
+    .blocklist, .statement, .loop {
+        min-width: 100%;
+        width: fit-content;
+    }
+
     .statement, .loop, .condition {
         display: flex;
         flex-direction: column;
     }
     
-    .statement:not(:last-child), .loop:not(:last-child) {
+    .statement, .loop, .condition, .new-block {
         border-bottom-width: 1px;
+
+        &:last-child {
+            margin-bottom: -1px;
+        }
     }
 
     .loop > .blocklist {
-        margin-left: 3rem;
+        margin-left: 2rem;
         border-width: 1px 0 0 1px;
+        min-width: calc(100% - 2rem);
     }
 
     .condition {
         margin-bottom: -1px;
+        min-width: 100%;
+        width: max-content;
+        position: relative;
 
         > input {
             text-align: center;
+            margin: 0 5rem;
+            min-width: calc(100% - 10rem);
         }
 
         &::before, &::after {
@@ -276,19 +387,20 @@ body {
 
         > svg {
             position: absolute;
-            height: 35px;
+            height: 36px;
             width: 100%;
             pointer-events: none;
         }
     }
     
     .condition-body {
-        display: flex;
+        display: inline-grid;
+        grid-template-columns: repeat(2, 1fr);
+        width: 100%;
 
         > .blocklist {
-            width: 50%;
+            margin-bottom: -1px;
             border-width: 1px 0 1px 0;
-            height: fit-content;
 
             &:first-child {
                 border-right-width: 1px;
