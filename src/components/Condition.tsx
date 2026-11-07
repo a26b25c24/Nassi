@@ -25,7 +25,10 @@ export default function Condition(props: Readonly<{
         onDelete
     } = props
     
-    return <div className="block condition">
+    return <div className={"block condition" 
+                + ((ifBlocks.length && !elseBlocks.length) ? " condition--only-if" : "")
+                + ((elseBlocks.length && !ifBlocks.length) ? " condition--only-else" : "")
+            }>
             <Input placeholder="Bedingung" onChange={(e) => onContentChange(e.currentTarget.value)} value={content}/>
             <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden>
                 <path d="M0,0 L50,100 L100,0" fill="none" stroke="black" strokeWidth={1} vectorEffect="non-scaling-stroke"></path>
