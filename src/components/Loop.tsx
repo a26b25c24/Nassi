@@ -10,6 +10,8 @@ export default function Loop(props: Readonly<{
     onBlocksChange: (blocks: Block[]) => void;
     content: string;
     onContentChange: (content: string) => void;
+    isTail: boolean;
+    onIsTailChange: (isTail: boolean) => void;
     onAppend: () => void;
     onDelete: () => void;
 }>) {
@@ -19,14 +21,17 @@ export default function Loop(props: Readonly<{
         onBlocksChange,
         content,
         onContentChange,
+        isTail,
+        onIsTailChange,
         onAppend,
         onDelete
     } = props
     
-    return <div className="block loop">
+    return <div className={"block loop" + (isTail ? " loop--is-tail" : "")}>
             <Input placeholder="Schleife" onChange={(e) => onContentChange(e.currentTarget.value)} value={content}/>
             <BlockList depth={depth + 1} blocks={blocks} onBlocksChange={onBlocksChange}></BlockList>
             <button className="button append-block-button" onClick={onAppend}><PlusIcon/></button>
             <button className="button delete-block-button" onClick={onDelete}><XmarkIcon/></button>
+            <button className="button loop-swap-button" onClick={() => onIsTailChange(!isTail)}>⇕</button>
         </div>
 }
