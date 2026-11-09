@@ -34,7 +34,7 @@ export default function BlockList(props: Readonly<{
                     onAppend={onAppend(i)} onDelete={onDelete(i)}
                     onChoose={type => {
                         if (type === "statement") onBlocksChange(blocks.toSpliced(i, 1, { ...b, type, content: "" }))
-                        if (type === "loop") onBlocksChange(blocks.toSpliced(i, 1, { ...b, type, content: "", blocks: [] }))
+                        if (type === "loop") onBlocksChange(blocks.toSpliced(i, 1, { ...b, type, content: "", blocks: [], isTail: false }))
                         if (type === "condition") onBlocksChange(blocks.toSpliced(i, 1, { ...b, type, content: "", ifBlocks: [], elseBlocks: [] }))
                     }}
                 /> :
@@ -46,10 +46,11 @@ export default function BlockList(props: Readonly<{
                 /> :
                 b.type === "loop" ?
                 <Loop
-                    key={b.id} depth={depth} blocks={b.blocks} content={b.content}
+                    key={b.id} depth={depth} blocks={b.blocks} content={b.content} isTail={b.isTail}
                     onAppend={onAppend(i)} onDelete={onDelete(i)}
                     onBlocksChange={newBlocks => onBlocksChange(blocks.toSpliced(i, 1, { ...b, blocks: newBlocks }))}
                     onContentChange={content => onBlocksChange(blocks.toSpliced(i, 1, { ...b, content}))}
+                    onIsTailChange={isTail => onBlocksChange(blocks.toSpliced(i, 1, { ...b, isTail}))}
                 /> :
                 b.type === "condition" ?
                 <Condition

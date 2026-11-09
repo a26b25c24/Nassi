@@ -3,7 +3,7 @@ export type Block = {
 } & (
   | { type: null }
   | { type: "statement", content: string }
-  | { type: "loop", content: string, blocks: Block[] }
+  | { type: "loop", content: string, blocks: Block[], isTail: boolean }
   | { type: "condition", content: string, ifBlocks: Block[], elseBlocks: Block[] }
 )
 

@@ -294,6 +294,11 @@ body, button, input {
         padding: 0.5rem 0 1.5rem 0;
         gap: 0.5rem;
         position: relative;
+
+        &--is-tail {
+            flex-direction: column-reverse;
+            padding: 1.5rem 0 0.5rem 0;
+        }
     
         > .blocklist {
             margin-left: 2rem;
@@ -389,13 +394,13 @@ body, button, input {
 
     .prepend-block-button {
         right: 0;
-        top: 0;
+        top: 0.125rem;
         transform: translate(50%, -50%);
     }
     
     .append-block-button {
         right: 0;
-        bottom: 0;
+        bottom: 0.125rem;
         transform: translate(50%, 50%);
     }
     
@@ -404,8 +409,14 @@ body, button, input {
         top: 14px;
         background-color: #a92147;
     }
+
+    .loop-swap-button {
+        top: 50%;
+        left: 0.25rem;
+        transform: translate(0, -50%);
+    }
     
-    .prepend-block-button, .append-block-button, .delete-block-button {
+    .prepend-block-button, .append-block-button, .delete-block-button, .loop-swap-button {
         position: absolute;
         z-index: 1;
         width: 1.5rem;
@@ -559,7 +570,7 @@ body, button, input {
 
         > svg {
             position: absolute;
-            height: 36px;
+            height: 35px;
             width: 100%;
             pointer-events: none;
         }
@@ -640,7 +651,7 @@ body, button, input {
     top: 30%;
     transform: translate(-50%, -50%);
     padding: 0.5rem;
-    background-color: color-mix(in srgb, #4a96b3 20%, white);
+    background-color: white;
     color: #222e50;
     border: 1px solid #4a96b3;
     width: fit-content;
@@ -681,6 +692,23 @@ body, button, input {
         }
     }
 
+    & > div:first-of-type {
+        margin: 1rem 0;
+
+        &.__no-structograms {
+            margin-bottom: 0;
+        }
+
+        & + div {
+            border: none;
+        }
+    }
+
+    &__no-structograms {
+        padding: 0.25rem 0;
+        font-style: italic;
+    }
+
     &__structogram {
         padding: 0.25rem 0;
         border-top: 1px solid #4a96b3;
@@ -688,12 +716,6 @@ body, button, input {
         justify-content: space-between;
         align-items: center;
         gap: 1rem;
-
-        &:first-child {
-            border: none;
-            margin-top: 1rem;
-        }
-
         .button {
             width: 1.5rem;
             height: 1.5rem;

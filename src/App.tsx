@@ -14,28 +14,23 @@ type SavedStructograms = {
   timestamp: number;
 }[]
 
-function downloadImage(node: HTMLElement | null) {
+async function downloadImage(node: HTMLElement | null) {
   console.log(node)
   if (!node) return
   node.querySelectorAll("input").forEach(i => i.readOnly = true)
-  console.log(Date.now())
   node.classList.add("blocklist-root--download")
-  htmlToImage
-    .toPng(node, {pixelRatio: 3, backgroundColor: "white"})
-    .then((dataUrl) => {
-      console.log(Date.now())
-      node.classList.remove("blocklist-root--download")
-      node.querySelectorAll("input").forEach(i => i.readOnly = false)
 
-      const link = document.createElement("a")
-      link.download = "Struktogramm.png"
-      link.href = dataUrl
+  const blob = await htmlToImage.toBlob(node, {pixelRatio: 3, backgroundColor: "white", skipFonts: true})
+  if (!blob) return
 
-      link.click()
-    })
-    .catch((err) => {
-      console.error("Error while downloading image", err);
-    });
+  node.classList.remove("blocklist-root--download")
+  node.querySelectorAll("input").forEach(i => i.readOnly = false)
+
+  const link = document.createElement("a")
+  link.download = "Struktogramm.png"
+  link.href = URL.createObjectURL(blob)
+
+  link.click()
 }
 
 function App() {
@@ -192,10 +187,11 @@ function App() {
           <h3 className="saved-structograms-popup__heading">
             Gespeichertes Struktogramm laden <button className="button" onClick={() => setShowSavedStructogramsPopup(false)}><XmarkIcon/></button>
           </h3>
-
-          Wähle ein gespeichertes Struktogramm zum Laden aus.
-
-          <div>
+            {
+              savedStructograms.length === 0
+              ? <div className="saved-structograms-popup__no-structograms">Keine Struktogramme gespeichert.</div>
+              : <div>Wähle ein gespeichertes Struktogramm zum Laden aus.</div>
+            }
             {
               savedStructograms.map((s, i) => 
                 <div className="saved-structograms-popup__structogram" key={s.timestamp}>{s.name} ({
@@ -224,7 +220,6 @@ function App() {
               )
             }
           </div>
-        </div>
       </div>
     </>
   )
