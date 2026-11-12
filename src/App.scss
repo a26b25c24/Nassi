@@ -304,6 +304,10 @@ body, button, input {
             margin-left: 2rem;
             padding: 0.25rem;
             padding-right: 0;
+
+            & > .prepend-block-button {
+                transform: translate(50%, calc(0.25rem - 50%));
+            }
         }
     }
     
@@ -394,13 +398,13 @@ body, button, input {
 
     .prepend-block-button {
         right: 0;
-        top: 0.125rem;
+        top: -0.125rem;
         transform: translate(50%, -50%);
     }
     
     .append-block-button {
         right: 0;
-        bottom: 0.125rem;
+        bottom: -0.125rem;
         transform: translate(50%, 50%);
     }
     
@@ -473,7 +477,7 @@ body, button, input {
 .blocklist-root--download, .blocklist-root--standard {
     caret-color: transparent;
 
-    .prepend-block-button, .append-block-button, .delete-block-button {
+    .prepend-block-button, .append-block-button, .delete-block-button, .loop-swap-button {
         display: none;
     }
 }
@@ -532,10 +536,22 @@ body, button, input {
         }
     }
 
-    .loop > .blocklist {
-        margin-left: 2rem;
-        border-width: 1px 0 0 1px;
-        min-width: calc(100% - 2rem);
+    .loop {
+        > .blocklist {
+            margin-left: 2rem;
+            border-width: 1px 0 0 1px;
+            min-width: calc(100% - 2rem);
+        }
+
+        &--is-tail {
+            flex-direction: column-reverse;
+        
+            > .blocklist {
+                margin-left: 2rem;
+                border-width: 0 0 1px 1px;
+                min-width: calc(100% - 2rem);
+            }
+        }
     }
 
     .condition {
